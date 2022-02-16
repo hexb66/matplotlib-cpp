@@ -1,10 +1,19 @@
-get_filename_component(matplotlib_cpp_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+if(NOT DEFINED matplotlib_cpp_FOUND)
+  set(matplotlib_cpp_FOUND 1)
+  set(matplotlib_cpp_INCLUDE_DIRS "@matplotlib_cpp_include_dirs@")
 
-if(NOT TARGET matplotlib_cpp::matplotlib_cpp)
-  find_package(Python3 COMPONENTS Interpreter Development REQUIRED)
+  find_package(PythonLibs 3.8 REQUIRED)
   find_package(Python3 COMPONENTS NumPy)
-  include("${matplotlib_cpp_CMAKE_DIR}/matplotlib_cppTargets.cmake")
 
-  get_target_property(matplotlib_cpp_INCLUDE_DIRS matplotlib_cpp::matplotlib_cpp INTERFACE_INCLUDE_DIRECTORIES)
+  include_directories(
+    ${matplotlib_cpp_INCLUDE_DIRS}
+    ${PYTHON_INCLUDE_DIRS}
+    ${Python3_NumPy_INCLUDE_DIRS}
+  )
 
+  set(matplotlib_LIBS ${PYTHON_LIBRARIES})
+  list(GET matplotlib_LIBS 0 2 3 REMOVE_STR)
+  remove(matplotlib_LIBS ${REMOVE_STR})
+
+  message("--- [matplotlib_cpp]: Found! Already include required directories! Please link matplotlib_LIBS with /MT options.")
 endif()
