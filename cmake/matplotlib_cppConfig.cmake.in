@@ -12,8 +12,11 @@ if(NOT DEFINED matplotlib_cpp_FOUND)
   )
 
   set(matplotlib_LIBS ${PYTHON_LIBRARIES})
-  list(GET matplotlib_LIBS 0 2 3 REMOVE_STR)
-  remove(matplotlib_LIBS ${REMOVE_STR})
-
+  
+  list(LENGTH matplotlib_LIBS Len)
+  if(${Len}>1)
+    list(GET matplotlib_LIBS 0 2 3 REMOVE_STR)
+    remove(matplotlib_LIBS ${REMOVE_STR})
+  endif()
   message("--- [matplotlib_cpp]: Found! Already include required directories! Please link matplotlib_LIBS with /MT options.")
 endif()
