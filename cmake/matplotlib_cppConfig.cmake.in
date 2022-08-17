@@ -2,7 +2,7 @@ if(NOT DEFINED matplotlib_cpp_FOUND)
   set(matplotlib_cpp_FOUND 1)
   set(matplotlib_cpp_INCLUDE_DIRS "@matplotlib_cpp_include_dirs@")
 
-  find_package(PythonLibs 3.8 REQUIRED)
+  find_package(PythonLibs REQUIRED)
   find_package(Python3 COMPONENTS NumPy)
 
   include_directories(
